@@ -1435,7 +1435,19 @@
             charts.vendasPorDia = new Chart(document.getElementById('vendasPorDiaChart').getContext('2d'), {
                 type: 'bar',
                 data: { labels: diasArr.map(x => x[0]), datasets: [{ label: 'Faturamento (R$)', data: diasArr.map(x => x[1]), backgroundColor: '#3b82f6', borderRadius: 6 }] },
-                options: { ...commonOpts, plugins: { ...commonOpts.plugins, title: { display: true, text: 'Faturamento por Dia do Mês' } } }
+                options: { 
+                    ...commonOpts, 
+                    plugins: { 
+                        ...commonOpts.plugins, 
+                        title: { display: true, text: 'Faturamento por Dia do Mês' },
+                        tooltip: {
+                            callbacks: {
+                                title: () => '',
+                                label: (ctx) => BRL(ctx.raw)
+                            }
+                        }
+                    } 
+                }
             });
         }
     </script>
