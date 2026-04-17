@@ -1308,18 +1308,20 @@
             const statsByDesc = {};
             rows.forEach(r => {
                 const k = r.Descricao || '—';
-                if (!statsByDesc[k]) statsByDesc[k] = { valor: 0, qtd: 0 };
+                if (!statsByDesc[k]) statsByDesc[k] = { valor: 0, qtd: 0, cod: r.CodItem || '—' };
                 statsByDesc[k].valor += (+r.PrecoFinal || 0);
                 statsByDesc[k].qtd += (+r.Quantidade || 0);
             });
 
             const accessoryTooltip = {
                 callbacks: {
+                    title: () => '',
                     label: (context) => {
                         const name = context.label;
-                        const s = statsByDesc[name] || { valor: 0, qtd: 0 };
+                        const s = statsByDesc[name] || { valor: 0, qtd: 0, cod: '—' };
                         const avg = s.qtd ? s.valor / s.qtd : 0;
                         return [
+                            `Código: ${s.cod}`,
                             `Faturamento: ${BRL(s.valor)}`,
                             `Quantidade: ${NUM(s.qtd)}`,
                             `Preço Médio: ${BRL(avg)}`
